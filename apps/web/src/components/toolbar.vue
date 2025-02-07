@@ -11,49 +11,43 @@ const emits = defineEmits<Emit>();
 const { t } = useI18n();
 
 const addToSearchEngine = async () => {
-  try {
-    // Fetch the OpenSearch XML
-    const response = await fetch('/opensearch.xml');
-    const xmlText = await response.text();
+  const isFirefox = 'external' in window && 'AddSearchProvider' in window.external;
+  const isChrome = navigator.userAgent.includes('Chrome');
 
-    // Replace the placeholder with actual origin
-    const modifiedXml = xmlText.replace(/ORIGIN_PLACEHOLDER/g, window.location.origin);
-
-    // Create a Blob with the modified XML
-    const blob = new Blob([modifiedXml], { type: 'application/opensearchdescription+xml' });
-    const xmlUrl = URL.createObjectURL(blob);
-
-    // Add the search engine
-    if ('external' in window && 'AddSearchProvider' in window.external) {
-      // Firefox
-      try {
-        (window.external as any).AddSearchProvider(xmlUrl);
-        MessagePlugin.success(t('message.searchEngineAdded'));
-      } catch (error) {
-        console.error('Error adding search provider:', error);
-        MessagePlugin.error(t('message.searchEngineError'));
-      }
-    } else if ('chrome' in window) {
-      // Chrome - show instructions since Chrome requires manual addition
+  if (isFirefox) {
+    try {
+      // Firefox: Use the OpenSearch XML
+      // The browser will resolve relative URLs in the XML against the current origin
+      (window.external as any).AddSearchProvider('/opensearch.xml');
+      MessagePlugin.success(t('message.searchEngineAdded'));
+    } catch (error) {
+      console.error('Error adding search provider:', error);
+      MessagePlugin.error(t('message.searchEngineError'));
+    }
+  } else if (isChrome) {
+    try {
+      // Chrome: Copy the search URL
+      // Use window.location.origin to get the current domain
       const searchUrl = `${window.location.origin}/search?q=%s`;
+      await navigator.clipboard.writeText(searchUrl);
+
+      // Show detailed instructions
       MessagePlugin.info({
         content: t('message.chromeInstructions'),
-        duration: 10000,
+        duration: 15000,
         closeBtn: true,
+        placement: 'top-right'
       });
-
-      // Copy the search URL to clipboard for easier adding
-      await navigator.clipboard.writeText(searchUrl);
-    } else {
-      // Unsupported browser
-      MessagePlugin.warning(t('message.browserNotSupported'));
+    } catch (error) {
+      console.error('Error copying search URL:', error);
+      MessagePlugin.error(t('message.copyError'));
     }
-
-    // Clean up
-    URL.revokeObjectURL(xmlUrl);
-  } catch (error) {
-    console.error('Error setting up search engine:', error);
-    MessagePlugin.error(t('message.searchEngineError'));
+  } else {
+    // Unsupported browser
+    MessagePlugin.warning({
+      content: t('message.browserNotSupported'),
+      duration: 5000
+    });
   }
 };
 </script>
@@ -77,7 +71,7 @@ export default {
       </t-button>
     </div>
     <div class="flex w-9 justify-center gap-2 rounded-xl bg-gray-200 p-1 shadow-lg dark:bg-gray-600">
-      <t-tooltip :content="t('addToSearchEngine')">
+      <t-tooltip :content="t('addToSearchEngine')" placement="left">
         <t-button shape="circle" theme="default" @click="addToSearchEngine">
           <template #icon> <RiSearchLine /></template>
         </t-button>

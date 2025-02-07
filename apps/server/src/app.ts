@@ -4,7 +4,7 @@ import Router from '@koa/router';
 import cors from '@koa/cors';
 import serve from 'koa-static';
 import { bodyParser } from '@koa/bodyparser';
-import { whiteListMiddleware } from './middleware';
+import { whiteListMiddleware, opensearchMiddleware } from './middleware';
 import { getConfig } from './config';
 import { logger } from './logger';
 import history from 'koa2-connect-history-api-fallback';
@@ -24,6 +24,9 @@ app.use(history({
   index: '/index.html',
   whiteList: ['/api']
 }));
+
+// Add opensearch middleware before static files
+app.use(opensearchMiddleware);
 
 // static path
 const staticPath = path.join(__dirname, '../web/dist');
