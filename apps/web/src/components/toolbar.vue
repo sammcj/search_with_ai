@@ -10,45 +10,30 @@ type Emit = {
 const emits = defineEmits<Emit>();
 const { t } = useI18n();
 
-const addToSearchEngine = async () => {
-  const isFirefox = 'external' in window && 'AddSearchProvider' in window.external;
-  const isChrome = navigator.userAgent.includes('Chrome');
-
-  if (isFirefox) {
+const handleSearchEngineClick = (event: MouseEvent) => {
+  // For Firefox
+  if ('external' in window && 'AddSearchProvider' in window.external) {
+    event.preventDefault();
     try {
-      // Firefox: Use the OpenSearch XML
-      // The browser will resolve relative URLs in the XML against the current origin
       (window.external as any).AddSearchProvider('/opensearch.xml');
-      MessagePlugin.success(t('message.searchEngineAdded'));
     } catch (error) {
       console.error('Error adding search provider:', error);
       MessagePlugin.error(t('message.searchEngineError'));
     }
-  } else if (isChrome) {
-    try {
-      // Chrome: Copy the search URL
-      // Use window.location.origin to get the current domain
-      const searchUrl = `${window.location.origin}/search?q=%s`;
-      await navigator.clipboard.writeText(searchUrl);
-
-      // Show detailed instructions
+  } else if (navigator.userAgent.includes('Chrome')) {
+    // For Chrome, show instructions
+    event.preventDefault();
+    const searchUrl = `${window.location.origin}/search?q=%s`;
+    navigator.clipboard.writeText(searchUrl).then(() => {
       MessagePlugin.info({
         content: t('message.chromeInstructions'),
         duration: 15000,
         closeBtn: true,
         placement: 'top-right'
       });
-    } catch (error) {
-      console.error('Error copying search URL:', error);
-      MessagePlugin.error(t('message.copyError'));
-    }
-  } else {
-    // Unsupported browser
-    MessagePlugin.warning({
-      content: t('message.browserNotSupported'),
-      duration: 5000
     });
   }
+  // For other browsers, let the link handle it naturally
 };
 </script>
 
@@ -72,10 +57,27 @@ export default {
     </div>
     <div class="flex w-9 justify-center gap-2 rounded-xl bg-gray-200 p-1 shadow-lg dark:bg-gray-600">
       <t-tooltip :content="t('addToSearchEngine')" placement="left">
-        <t-button shape="circle" theme="default" @click="addToSearchEngine">
-          <template #icon> <RiSearchLine /></template>
-        </t-button>
+        <!-- Use a real link that browsers will recognize -->
+        <a
+          href="/opensearch.xml"
+          rel="search"
+          type="application/opensearchdescription+xml"
+          title="Search with AI"
+          @click="handleSearchEngineClick"
+          class="inline-block"
+        >
+          <t-button shape="circle" theme="default">
+            <template #icon> <RiSearchLine /></template>
+          </t-button>
+        </a>
       </t-tooltip>
     </div>
   </div>
 </template>
+
+<style scoped>
+a {
+  text-decoration: none;
+  color: inherit;
+}
+</style>

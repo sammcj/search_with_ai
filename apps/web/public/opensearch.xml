@@ -4,24 +4,30 @@
     <ShortName>Search with AI</ShortName>
     <Description>AI-powered search engine with intelligent results</Description>
     <InputEncoding>UTF-8</InputEncoding>
-    <OutputEncoding>UTF-8</OutputEncoding>
-    <Language>*</Language>
+    <Image width="16" height="16" type="image/x-icon">/favicon.ico</Image>
 
-    <!-- Define the search URL -->
+    <!-- The main search URL -->
     <Url type="text/html"
          method="get"
          template="/search">
-        <Param name="q" value="{searchTerms}"/>
+         <Param name="q" value="{searchTerms}"/>
     </Url>
 
-    <!-- Reference to the OpenSearch description -->
+    <!-- For browser autocomplete -->
+    <Url type="application/x-suggestions+json"
+         method="get"
+         template="/api/suggestions">
+         <Param name="q" value="{searchTerms}"/>
+    </Url>
+
+    <!-- For OpenSearch description discovery -->
     <Url type="application/opensearchdescription+xml"
          rel="self"
-         template="/opensearch.xml" />
+         template="/opensearch.xml"/>
 
-    <!-- Browser-specific search form -->
+    <!-- Additional metadata -->
     <moz:SearchForm>/search</moz:SearchForm>
-
-    <!-- Favicon -->
-    <Image height="16" width="16" type="image/x-icon">/favicon.ico</Image>
+    <Language>*</Language>
+    <OutputEncoding>UTF-8</OutputEncoding>
+    <AdultContent>false</AdultContent>
 </OpenSearchDescription>
