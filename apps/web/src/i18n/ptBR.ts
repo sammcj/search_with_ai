@@ -31,6 +31,7 @@ export default {
     provider: 'PROVIDER',
     enableLocalModel: 'Ativar Local LLM',
     warning: 'Conteúdo gerado por IA, e a eficácia não pode ser garantida.',
+    addToSearchEngine: 'Adicionar aos Buscadores do Navegador',
     message: {
         queryError: 'Erro ao consultar',
         copyError: 'Falha ao copiar',
@@ -38,7 +39,11 @@ export default {
         sourceError: 'Falha ao obter informação',
         shareSuccess: 'Link de compartilhamento copiado.',
         noRelated: 'Nenhuma pergunta relacionada encontrada',
-        success: 'sucesso!'
+        success: 'sucesso!',
+        searchEngineAdded: 'Buscador adicionado com sucesso ao seu navegador',
+        searchEngineError: 'Falha ao adicionar buscador ao seu navegador',
+        chromeInstructions: 'Para Chrome: Clique com o botão direito na barra de endereço > Gerenciar mecanismos de pesquisa > Adicionar > Digite "Search with AI" e cole a URL atual com "?q=%s" no final',
+        browserNotSupported: 'Seu navegador não suporta a adição de buscadores personalizados'
     },
     category: {
         general: 'Geral',

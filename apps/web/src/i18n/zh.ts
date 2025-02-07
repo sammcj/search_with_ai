@@ -31,6 +31,7 @@ export default {
   provider: '服务方',
   enableLocalModel: '启用本地大模型',
   warning: '搜索生成的内容由AI大模型和搜索引擎生成，内容不代表我们的态度或观点，仅供研究学习用途。',
+  addToSearchEngine: '添加到浏览器搜索引擎',
   message: {
     queryError: '查询出错了',
     copyError: '复制失败了',
@@ -38,7 +39,11 @@ export default {
     sourceError: '获取参考资料失败了',
     shareSuccess: '分享链接已复制到剪贴板。',
     noRelated: '没有相关问题或者查询失败了',
-    success: '操作成功了！'
+    success: '操作成功了！',
+    searchEngineAdded: '搜索引擎已成功添加到浏览器',
+    searchEngineError: '添加搜索引擎失败',
+    chromeInstructions: 'Chrome浏览器：右键点击地址栏 > 管理搜索引擎 > 添加 > 输入"Search with AI"并粘贴当前网址，在末尾加上"?q=%s"',
+    browserNotSupported: '您的浏览器不支持添加自定义搜索引擎'
   },
   category: {
     general: '全网',
