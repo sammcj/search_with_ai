@@ -1,6 +1,9 @@
 <a name="top"></a>
 # Open AI Search (支持 DeepResearch)
 
+> [!IMPORTANT]
+> 🚀 **Alpha 预览版现已发布！** 体验最新功能和改进。[获取 Alpha 版本 →](https://github.com/yokingma/search_with_ai/tree/v1.2.0-alpha)
+
 <br>
 <p align="center">
   基于AI大语言模型的搜索引擎，支持DeepResearch生成详细报告，支持DeepSeek R1深度思考。基于Node.js&Vue3。适合新手入门AI大模型开发参考:)，文档后有交流群二维码。

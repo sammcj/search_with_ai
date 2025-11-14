@@ -1,5 +1,8 @@
 <a name="top"></a>
-# Open AI Search (Support Deep Research)
+# Open AI Search
+
+> [!IMPORTANT]
+> 🚀 **Alpha Preview Available!** Try the latest features and improvements in our alpha version. [Get Alpha Access →](https://github.com/yokingma/search_with_ai/tree/v1.2.0-alpha)
 
 <br>
 <p align="center">
