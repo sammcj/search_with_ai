@@ -4,6 +4,10 @@
 > [!IMPORTANT]
 > 🚀 **Alpha Preview Available!** Try the latest features and improvements in our alpha version. [Get Alpha Access →](https://github.com/yokingma/search_with_ai/tree/v1.2.0-alpha)
 
+<div align="center">
+ <img src="./assets/new_sreenshot.jpg"></img>
+</div>
+
 <br>
 <p align="center">
   Build your conversation-based search with LLM, support DeepResearch / DeepSeek R1.

@@ -5,6 +5,10 @@
 > [!IMPORTANT]
 > 🚀 **アルファプレビュー版が利用可能！** 最新機能と改善をお試しください。[アルファ版を入手 →](https://github.com/yokingma/search_with_ai/tree/v1.2.0-alpha)
 
+<div align="center">
+ <img src="./assets/new_sreenshot.jpg"></img>
+</div>
+
 <p align="center">
   LLMを使用して会話ベースの検索を構築し、DeepResearch / DeepSeek R1をサポートします。
 </p>
